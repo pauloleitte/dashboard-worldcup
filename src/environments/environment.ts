@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_URL: "http://api.cup2022.ir/api/v1",
+  API_URL: process.env.API_PROD || "http://localhost:4200/api",
 };
 
 /*

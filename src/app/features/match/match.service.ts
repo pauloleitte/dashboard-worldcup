@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
 import { MatchesResponseModel } from "./models/match-response.model";
 
 @Injectable({
@@ -8,6 +9,7 @@ import { MatchesResponseModel } from "./models/match-response.model";
 })
 export class MatchService {
   token: string = "";
+  urlApi = environment.API_URL;
   constructor(private readonly http: HttpClient) {
     this.token = localStorage.getItem("TOKEN");
   }
@@ -16,7 +18,7 @@ export class MatchService {
     const headers = new HttpHeaders()
       .set("content-type", "application/json")
       .set("Authorization", `Bearer ${this.token}`);
-    return this.http.get<MatchesResponseModel>("/api/match", {
+    return this.http.get<MatchesResponseModel>(`${this.urlApi}/match`, {
       headers: headers,
     });
   }
@@ -25,7 +27,7 @@ export class MatchService {
     const headers = new HttpHeaders()
       .set("content-type", "application/json")
       .set("Authorization", `Bearer ${this.token}`);
-    return this.http.get<MatchesResponseModel>(`/api/match/${id}`, {
+    return this.http.get<MatchesResponseModel>(`${this.urlApi}/match/${id}`, {
       headers: headers,
     });
   }

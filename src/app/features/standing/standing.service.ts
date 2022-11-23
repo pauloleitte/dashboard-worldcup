@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
 import { StadingResponseModel } from "./models/standing-response.model";
 
 @Injectable({
@@ -8,6 +9,7 @@ import { StadingResponseModel } from "./models/standing-response.model";
 })
 export class StandingService {
   token: string = "";
+  urlApi = environment.API_URL;
   constructor(private readonly http: HttpClient) {
     this.token = localStorage.getItem("TOKEN");
   }
@@ -16,7 +18,7 @@ export class StandingService {
     const headers = new HttpHeaders()
       .set("content-type", "application/json")
       .set("Authorization", `Bearer ${this.token}`);
-    return this.http.get<StadingResponseModel>("/api/standings", {
+    return this.http.get<StadingResponseModel>(`${this.urlApi}/standings`, {
       headers: headers,
     });
   }

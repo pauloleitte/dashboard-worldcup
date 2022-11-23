@@ -11,16 +11,18 @@ import { SignupResponseModel } from "./models/signup-response.model";
   providedIn: "root",
 })
 export class AuthService {
-
   urlApi = environment.API_URL;
 
   constructor(private readonly http: HttpClient) {}
 
   login(request: LoginRequestModel): Observable<LoginResponseModel> {
-    return this.http.post<LoginResponseModel>(`api/user/login`, request);
+    return this.http.post<LoginResponseModel>(
+      `${this.urlApi}/user/login`,
+      request
+    );
   }
 
   signup(request: SignupRequestModel): Observable<SignupResponseModel> {
-    return this.http.post<SignupResponseModel>(`api/user`, request);
+    return this.http.post<SignupResponseModel>(`${this.urlApi}/user`, request);
   }
 }
