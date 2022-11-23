@@ -1,0 +1,74 @@
+<div class="team-container mb-3">
+  <div class="card-root">
+    <h1>Matches</h1>
+    <table class="table mt-3">
+      <thead>
+        <tr>
+          <th scope="col">Home Team</th>
+          <th scope="col">Away Team</th>
+          <th scope="col">Date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let match of matches">
+          <td>{{ match.home_team_en }}</td>
+          <td>{{ match.away_team_en }}</td>
+          <td>{{ match.local_date | date }}</td>
+          <td>{{ match.time_elapsed }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-link"
+              (click)="getMatchById(content, match.id)"
+            >
+              View More
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Match!</h4>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-content">
+          <div class="game-score">
+            <div class="game-score-home">
+              <h4 class="mb-3">{{ match.home_team_en }}</h4>
+              <img src="{{ match.home_flag }}" alt="" />
+              <span>{{ match.home_score }}</span>
+            </div>
+            <div class="game-score-away">
+              <h4 class="mb-3">{{ match.away_team_en }}</h4>
+              <img src="{{ match.away_flag }}" alt="" />
+              <span>{{ match.away_score }}</span>
+            </div>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; width: 100%"
+          >
+            <ul>
+              <li *ngFor="let item of match.home_scorers[0].split(',')">
+                {{ item }}
+              </li>
+            </ul>
+            <ul>
+              <li *ngFor="let item of match.away_scorers[0].split(',')">
+                {{ item }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

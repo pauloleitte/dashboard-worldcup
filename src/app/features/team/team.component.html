@@ -1,0 +1,30 @@
+<div class="team-container mb-3">
+  <div class="card-root">
+    <h1>Teams</h1>
+    <table class="table mt-3">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Fifa Code</th>
+          <th scope="col">Flag</th>
+          <th scope="col">Group</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let team of teams">
+          <td>{{ team.name_en }}</td>
+          <td>{{ team.fifa_code }}</td>
+          <td>{{ team.groups }}</td>
+          <td>
+            <img
+              src="{{ team.flag }}"
+              height="80"
+              width="100"
+              alt="Flag for {{ team.name_en }}"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

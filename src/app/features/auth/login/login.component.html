@@ -1,0 +1,42 @@
+<div class="grid-root">
+  <div class="form-root">
+    <form [formGroup]="form">
+      <h4>WorldCup Dashboard</h4>
+      <div class="mb-3 mt-3 w-100">
+        <input
+          type="email"
+          formControlName="email"
+          class="form-control"
+          id="email"
+          placeholder="name@example.com"
+        />
+      </div>
+      <div class="mb-3 w-100">
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control"
+          id="password"
+          placeholder="Password"
+        />
+      </div>
+      <div class="mb-3 w-100">
+        <p>
+          Don't have an account?
+          <a [routerLink]="['/auth/register']" class="link">Click here!</a>
+        </p>
+      </div>
+      <button
+        (click)="login()"
+        type="button"
+        [disabled]="f.invalid"
+        class="btn btn-primary w-100"
+      >
+        Log In
+      </button>
+    </form>
+  </div>
+  <div class="ml-1">
+    <img src="/assets/images/undraw_forms_re_pkrt.svg" alt="Form Login" />
+  </div>
+</div>

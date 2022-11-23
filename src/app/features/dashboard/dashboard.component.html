@@ -1,0 +1,70 @@
+<div class="dashboard-container">
+  <h2>Welcome to WorldCup DashBoard!</h2>
+  <div class="dashboard-grid">
+    <div class="card-counter primary">
+      <i class="fa fa-soccer-ball-o"></i>
+      <div class="card-info-dashboard">
+        <span class="count-numbers">{{ totalGoals }}</span>
+        <span class="count-name">Goals</span>
+      </div>
+    </div>
+
+    <div class="card-counter success">
+      <i class="fa fa-code-fork"></i>
+      <div class="card-info-dashboard">
+        <span class="count-numbers">{{ totalPoints }}</span>
+        <span class="count-name">Points</span>
+      </div>
+    </div>
+
+    <div class="card-counter primary">
+      <i class="fa fa-check-circle"></i>
+      <div class="card-info-dashboard">
+        <span class="count-numbers">{{ totalMatches }}</span>
+        <span class="count-name">Matches</span>
+      </div>
+    </div>
+
+    <div class="card-counter success">
+      <i class="fa fa-trophy"></i>
+      <div class="card-info-dashboard">
+        <span class="count-numbers">{{ totalWins }}</span>
+        <span class="count-name">Wins</span>
+      </div>
+    </div>
+
+    <div class="card-counter danger">
+      <i class="fa fa-arrow-down"></i>
+      <div class="card-info-dashboard">
+        <span class="count-numbers">{{ totalLosses }}</span>
+        <span class="count-name">Losses</span>
+      </div>
+    </div>
+
+    <div class="card-counter info">
+      <i class="fa fa-exchange"></i>
+      <div class="card-info-dashboard">
+        <span class="count-numbers">{{ totalDraw }}</span>
+        <span class="count-name">Draws</span>
+      </div>
+    </div>
+  </div>
+  <div class="dashboard-grid">
+    <div>
+      <div>
+        <div style="display: block">
+          <canvas
+            baseChart
+            [data]="barChartData"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [type]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"
+          >
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+@import "~bootstrap/scss/bootstrap";
+.team-container {
+  @include media-breakpoint-down(xxl) {
+    width: 100%;
+    display: flex;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    flex-direction: column;
+  }
+
+  @include media-breakpoint-up(xxl) {
+    display: grid;
+    margin-top: 1rem;
+    padding: 1rem;
+    width: 100%;
+  }
+}
