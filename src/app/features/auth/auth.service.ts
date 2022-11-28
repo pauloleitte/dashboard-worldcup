@@ -55,10 +55,6 @@ export class AuthService {
     return this.loggedIn.asObservable();
   }
 
-  setIsLoggedIn() {
-    this.loggedIn.next(true);
-  }
-
   logout() {
     this.loggedIn.next(false);
     localStorage.removeItem("TOKEN");

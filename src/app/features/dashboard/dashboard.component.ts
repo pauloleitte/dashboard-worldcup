@@ -126,15 +126,6 @@ export class DashboardComponent implements OnInit {
     this.loading = false;
   }
 
-  groupItems(array, property) {
-    return array.reduce(function (groups, item) {
-      var name = item[property];
-      var group = groups[name] || (groups[name] = []);
-      group.push(item);
-      return groups;
-    }, []);
-  }
-
   handleDashboardValuesStandings() {
     this.groups.forEach((group) => {
       group.teams.forEach((team) => {
@@ -146,5 +137,14 @@ export class DashboardComponent implements OnInit {
         this.totalPoints += Number(team.pts);
       });
     });
+  }
+
+  groupItems(array, property) {
+    return array.reduce(function (groups, item) {
+      var name = item[property];
+      var group = groups[name] || (groups[name] = []);
+      group.push(item);
+      return groups;
+    }, []);
   }
 }

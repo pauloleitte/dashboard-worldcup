@@ -9,18 +9,12 @@ import { AuthService } from "src/app/features/auth/auth.service";
 })
 export class NavComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
-  isLoggedIn = false;
 
   constructor(private authService: AuthService) {
     this.isLoggedIn$ = this.authService.isLoggedIn;
   }
 
-  ngOnInit() {
-    this.isLoggedIn$.subscribe((val) => {
-      console.log("VALOR", val);
-      this.isLoggedIn = val;
-    });
-  }
+  ngOnInit() {}
 
   onLogout() {
     this.authService.logout();

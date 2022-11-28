@@ -13,10 +13,8 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatTableModule } from "@angular/material/table";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { RouterModule } from "@angular/router";
-import { AuthService } from "../features/auth/auth.service";
 import { LoadingComponent } from "./components/loading/loading.component";
 import { NavComponent } from "./components/nav/nav.component";
-import { SnackBarService } from "./services/snack-bar/snack-bar.service";
 
 const modules = [
   CommonModule,
@@ -41,6 +39,6 @@ const components = [NavComponent, LoadingComponent];
   declarations: [...components, LoadingComponent],
   exports: [...components, ...modules],
   imports: [...modules],
-  providers: [AuthService, SnackBarService],
+  providers: [],
 })
 export class SharedModule {}
