@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTable, MatTableDataSource } from "@angular/material/table";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { SnackBarService } from "src/app/shared/services/snack-bar/snack-bar.service";
 import { MatchService } from "./match.service";
 import { Match } from "./models/match";
 
@@ -32,7 +32,7 @@ export class MatchComponent implements OnInit, AfterViewInit {
   constructor(
     private readonly matchService: MatchService,
     private readonly modalService: NgbModal,
-    private readonly SnackBarService: SnackBarService
+    private readonly snackBarService: MatSnackBar,
   ) {}
 
   ngOnInit() {
@@ -54,7 +54,7 @@ export class MatchComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         this.loading = false;
-        this.SnackBarService.openSnackBar("Ops, erro during request data", "X");
+        this.snackBarService.open("Ops, erro during request data", "X");
       }
     );
   }

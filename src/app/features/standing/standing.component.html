@@ -1,42 +1,47 @@
 <div class="team-container mb-3">
-  <div class="card-root mb-3" *ngFor="let group of groups">
-    <h2>Group - {{ group.group }}</h2>
-    <table class="table mt-3">
-      <thead>
-        <tr>
-          <th scope="col">Team Name</th>
-          <th scope="col">Flag</th>
-          <th scope="col">Matches Played</th>
-          <th scope="col">Matches Won</th>
-          <th scope="col">Matches Lost</th>
-          <th scope="col">Points</th>
-          <th scope="col">Goals For</th>
-          <th scope="col">Goals Against</th>
-          <th scope="col">Goals Difference</th>
-          <th scope="col">Drawn</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let team of group.teams">
-          <td>{{ team.name_en }}</td>
-          <td>
-            <img
-              height="20"
-              width="20"
-              src="{{ team.flag }}"
-              alt="Flag of{{ team.name_en }}"
-            />
-          </td>
-          <td>{{ team.mp }}</td>
-          <td>{{ team.w }}</td>
-          <td>{{ team.l }}</td>
-          <td>{{ team.pts }}</td>
-          <td>{{ team.gf }}</td>
-          <td>{{ team.ga }}</td>
-          <td>{{ team.gd }}</td>
-          <td>{{ team.d }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div *ngIf="loading">
+    <app-loading></app-loading>
+  </div>
+  <div *ngIf="!loading">
+    <div class="card-root mb-3" *ngFor="let group of groups">
+      <h2>Group - {{ group.group }}</h2>
+      <table class="table mt-3">
+        <thead>
+          <tr>
+            <th scope="col">Team Name</th>
+            <th scope="col">Flag</th>
+            <th scope="col">Matches Played</th>
+            <th scope="col">Matches Won</th>
+            <th scope="col">Matches Lost</th>
+            <th scope="col">Points</th>
+            <th scope="col">Goals For</th>
+            <th scope="col">Goals Against</th>
+            <th scope="col">Goals Difference</th>
+            <th scope="col">Drawn</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let team of group.teams">
+            <td>{{ team.name_en }}</td>
+            <td>
+              <img
+                height="20"
+                width="20"
+                src="{{ team.flag }}"
+                alt="Flag of{{ team.name_en }}"
+              />
+            </td>
+            <td>{{ team.mp }}</td>
+            <td>{{ team.w }}</td>
+            <td>{{ team.l }}</td>
+            <td>{{ team.pts }}</td>
+            <td>{{ team.gf }}</td>
+            <td>{{ team.ga }}</td>
+            <td>{{ team.gd }}</td>
+            <td>{{ team.d }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

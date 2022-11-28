@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatTable, MatTableDataSource } from "@angular/material/table";
-import { SnackBarService } from "src/app/shared/services/snack-bar/snack-bar.service";
 import { Team } from "./models/team";
 
 import { TeamService } from "./team.service";
@@ -14,7 +14,7 @@ import { TeamService } from "./team.service";
 export class TeamComponent implements OnInit, AfterViewInit {
   constructor(
     private readonly teamService: TeamService,
-    private readonly snackBarService: SnackBarService
+    private readonly snackBarService: MatSnackBar
   ) {}
 
   @ViewChild(MatTable) table: MatTable<Team>;
@@ -45,7 +45,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         this.loading = false;
-        this.snackBarService.openSnackBar("Ops, erro during request data", "X");
+        this.snackBarService.open("Ops, erro during request data", "X");
       }
     );
   }

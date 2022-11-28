@@ -1,5 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { AuthService } from "../auth.service";
 
@@ -12,17 +20,23 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   isLoading = false;
   hide = true;
+  hideConfirm = true;
 
   constructor(
+    private readonly snackBarService: MatSnackBar,
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
     private readonly router: Router
   ) {
-    this.form = this.fb.group({
-      name: ["", Validators.required],
-      email: ["", Validators.email],
-      password: ["", Validators.required, Validators.min(8)],
-    });
+    this.form = this.fb.group(
+      {
+        name: ["", Validators.required],
+        email: ["", Validators.email],
+        password: ["", Validators.required],
+        confirmPassword: ["", Validators.required],
+      },
+      { validators: this.checkPasswords }
+    );
   }
 
   ngOnInit() {}
@@ -32,12 +46,18 @@ export class RegisterComponent implements OnInit {
     this.authService.signup(this.form.value).subscribe(
       (resp) => {
         localStorage.setItem("TOKEN", resp.data.token);
-        alert("Registration done successfully");
+        this.snackBarService.open(
+          "Registration done successfully",
+          "X"
+        );
         this.router.navigateByUrl("/dashboard");
       },
       (_) => {
         this.isLoading = false;
-        alert("Something went wrong try later");
+        this.snackBarService.open(
+          "Something went wrong try later",
+          "X"
+        );
       }
     );
   }
@@ -45,4 +65,12 @@ export class RegisterComponent implements OnInit {
   get f() {
     return this.form;
   }
+
+  checkPasswords: ValidatorFn = (
+    group: AbstractControl
+  ): ValidationErrors | null => {
+    let pass = group.get("password").value;
+    let confirmPass = group.get("confirmPassword").value;
+    return pass === confirmPass ? null : { notSame: true };
+  };
 }

@@ -4,22 +4,12 @@
       <h2>Create an account</h2>
       <mat-form-field class="mb-3 mt-3 w-100" appearance="fill">
         <mat-label>Enter your name</mat-label>
-        <input
-          matInput
-          placeholder="pat@example.com"
-          formControlName="name"
-          required
-        />
+        <input matInput placeholder="Jhon Doe" formControlName="name" />
         <mat-error *ngIf="f.controls['name'].invalid">Name invalid</mat-error>
       </mat-form-field>
       <mat-form-field class="mb-3 mt-3 w-100" appearance="fill">
         <mat-label>Enter your email</mat-label>
-        <input
-          matInput
-          placeholder="pat@example.com"
-          formControlName="email"
-          required
-        />
+        <input matInput placeholder="pat@example.com" formControlName="email" />
         <mat-error *ngIf="f.controls['email'].invalid"
           >E-mail invalid</mat-error
         >
@@ -41,6 +31,31 @@
         >
           <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
+        <mat-error *ngIf="f.controls['password'].invalid"
+          >Password invalid</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="mb-3 mt-3 w-100" appearance="fill">
+        <mat-label>Confirm your password</mat-label>
+        <input
+          matInput
+          formControlName="confirmPassword"
+          [type]="hideConfirm ? 'password' : 'text'"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hideConfirm = !hideConfirm"
+          [attr.aria-label]="'hideConfirm password'"
+          [attr.aria-pressed]="hideConfirm"
+        >
+          <mat-icon>{{
+            hideConfirm ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+        <mat-error *ngIf="f.hasError('notSame')">
+          Passwords do not match
+        </mat-error>
       </mat-form-field>
 
       <div class="mb-3 w-100">
@@ -70,6 +85,10 @@
     </form>
   </div>
   <div class="ml-1">
-    <img height="550" src="/assets/images/undraw_join_re_w1lh.svg" alt="Form Login" />
+    <img
+      height="550"
+      src="/assets/images/undraw_join_re_w1lh.svg"
+      alt="Form Login"
+    />
   </div>
 </div>
