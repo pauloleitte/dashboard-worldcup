@@ -14,7 +14,7 @@ import { StandingService } from "../standing/standing.service";
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
-  loading = true;
+  loading = false;
   isError = false;
 
   groups: Group[];
@@ -54,6 +54,12 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loading = true;
+    this.getMatches();
+    this.getStandings();
+  }
+
+  getMatches() {
     this.standingsService.getStandings().subscribe(
       (resp) => {
         this.standingsState.setState(resp);
@@ -65,6 +71,9 @@ export class DashboardComponent implements OnInit {
         this.isError = true;
       }
     );
+  }
+
+  getStandings() {
     this.matcheService.getMatches().subscribe(
       (resp) => {
         this.matchesState.setState(resp);
@@ -109,8 +118,11 @@ export class DashboardComponent implements OnInit {
       label: "Gols",
       data: totalGoalsByDay.map((entry) => entry.totalGoals),
     });
-    this.chart.ngOnDestroy();
-    this.chart.chart = this.chart.getChartBuilder(this.chart.ctx);
+    if (this.chart) {
+      this.chart.ngOnDestroy();
+      this.chart.chart = this.chart.getChartBuilder(this.chart.ctx);
+    }
+
     this.loading = false;
   }
 

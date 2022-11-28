@@ -9,7 +9,6 @@
   }
 
   @include media-breakpoint-up(xxl) {
-    margin-top: 1rem;
     padding: 1rem;
     padding: 2rem;
     width: 100%;
@@ -17,10 +16,21 @@
 }
 
 .dashboard-grid {
-  display: grid;
-  grid-template-columns:  repeat(3, 1fr);
-  column-gap: 0.5rem;
-  row-gap: 0.5rem;
+  @include media-breakpoint-down(xxl) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @include media-breakpoint-up(xxl) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+  }
 }
 
 .card-counter {

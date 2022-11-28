@@ -1,5 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatTable, MatTableDataSource } from "@angular/material/table";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { SnackBarService } from "src/app/shared/services/snack-bar/snack-bar.service";
 import { MatchService } from "./match.service";
 import { Match } from "./models/match";
 
@@ -8,23 +11,52 @@ import { Match } from "./models/match";
   templateUrl: "./match.component.html",
   styleUrls: ["./match.component.scss"],
 })
-export class MatchComponent implements OnInit {
+export class MatchComponent implements OnInit, AfterViewInit {
   matches: Match[];
   match: Match;
-  closeResult = "";
+  loading = false;
+
+  @ViewChild(MatTable) table: MatTable<Match>;
+  @ViewChild("paginator") paginator: MatPaginator;
+
+  dataSource = new MatTableDataSource();
+
+  displayedColumns: string[] = [
+    "HomeTeam",
+    "AwayTeam",
+    "Date",
+    "Status",
+    "Action",
+  ];
+
   constructor(
     private readonly matchService: MatchService,
-    private readonly modalService: NgbModal
+    private readonly modalService: NgbModal,
+    private readonly SnackBarService: SnackBarService
   ) {}
 
   ngOnInit() {
     this.getMatches();
   }
 
+  pageSizes = [3, 5, 7];
+
+  ngAfterViewInit() {}
+
   getMatches() {
-    this.matchService.getMatches().subscribe((resp) => {
-      this.matches = resp.data;
-    }, console.error);
+    this.loading = true;
+    this.matchService.getMatches().subscribe(
+      (resp) => {
+        this.matches = resp.data;
+        this.dataSource.data = this.matches;
+        this.dataSource.paginator = this.paginator;
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+        this.SnackBarService.openSnackBar("Ops, erro during request data", "X");
+      }
+    );
   }
 
   getMatchById(content, id: string) {
@@ -38,22 +70,8 @@ export class MatchComponent implements OnInit {
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title", centered: true })
       .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
+        (result) => {},
+        (reason) => {}
       );
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return "by pressing ESC";
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return "by clicking on a backdrop";
-    } else {
-      return `with: ${reason}`;
-    }
   }
 }

@@ -26,7 +26,6 @@ export class AuthService {
       .post<LoginResponseModel>(`${this.urlApi}/user/login`, request)
       .pipe(
         tap((result) => {
-          console.log(result);
           if (result.status == "success") {
             localStorage.setItem("TOKEN", result.data.token);
             this.loggedIn.next(true);
@@ -42,7 +41,7 @@ export class AuthService {
       .post<SignupResponseModel>(`${this.urlApi}/user`, request)
       .pipe(
         tap((result) => {
-          if (result.status === "200") {
+          if (result.status == "success") {
             localStorage.setItem("TOKEN", result.data.token);
             this.loggedIn.next(true);
             return result.data;
@@ -54,6 +53,10 @@ export class AuthService {
 
   get isLoggedIn() {
     return this.loggedIn.asObservable();
+  }
+
+  setIsLoggedIn() {
+    this.loggedIn.next(true);
   }
 
   logout() {
