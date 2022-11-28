@@ -10,10 +10,11 @@ import { AuthService } from "src/app/features/auth/auth.service";
 export class NavComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    this.isLoggedIn$ = this.authService.isLoggedIn;
+  }
 
   ngOnInit() {
-    this.isLoggedIn$ = this.authService.isLoggedIn;
     this.isLoggedIn$.subscribe(console.log, console.log);
   }
 

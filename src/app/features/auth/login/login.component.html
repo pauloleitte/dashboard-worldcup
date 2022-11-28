@@ -2,42 +2,60 @@
   <div class="form-root">
     <form [formGroup]="form">
       <h4>WorldCup Dashboard</h4>
-      <div class="mb-3 mt-3 w-100">
+      <mat-form-field class="mb-3 mt-3 w-100" appearance="fill">
+        <mat-label>Enter your email</mat-label>
         <input
-          type="email"
+          matInput
+          placeholder="pat@example.com"
           formControlName="email"
-          class="form-control"
-          id="email"
-          placeholder="name@example.com"
+          required
         />
-      </div>
-      <div class="mb-3 w-100">
+        <mat-error *ngIf="f.controls['email'].invalid"
+          >E-mail invalid</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="mb-3 mt-3 w-100" appearance="fill">
+        <mat-label>Enter your password</mat-label>
         <input
-          type="password"
+          matInput
           formControlName="password"
-          class="form-control"
-          id="password"
-          placeholder="Password"
+          [type]="hide ? 'password' : 'text'"
         />
-      </div>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+
       <div class="mb-3 w-100">
         <p>
           Don't have an account?
-          <a [routerLink]="['/auth/register']" class="link">Click here!</a>
+          <a mat-button [routerLink]="['/auth/register']" class="link"
+            >Click here!</a
+          >
         </p>
       </div>
-      <div *ngIf="isLoading" style="display: flex; justify-content: center; width: 100%">
-        <div  class="spinner-grow" role="status">
+      <div
+        *ngIf="isLoading"
+        style="display: flex; justify-content: center; width: 100%"
+      >
+        <div class="spinner-grow" role="status">
           <span class="sr-only">Loading...</span>
         </div>
       </div>
-
       <button
+        class="w-100"
         *ngIf="!isLoading"
         (click)="login()"
-        type="button"
         [disabled]="f.invalid"
-        class="btn btn-primary w-100"
+        mat-raised-button
+        color="primary"
       >
         Log In
       </button>

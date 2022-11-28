@@ -1,32 +1,16 @@
-<nav class="navbar navbar-dark bg-dark" *ngIf="isLoggedIn$ | async">
-  <div
-    style="
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      width: 100%;
-      justify-content: space-between;
-    "
-  >
-    <div style="display: flex; align-items: center; justify-content: center">
-      <div>
-        <a class="navbar-brand" [routerLink]="['/dashboard']">
-          <img
-            src="https://camo.githubusercontent.com/90fa6ec8d6cd1245d467c975dc0cd15034b1a62db08f093bb29039648d33e9ba/68747470733a2f2f656e676c6973682e63646e2e7a65656e6577732e636f6d2f73697465732f64656661756c742f66696c65732f323032302f30372f31352f3837323732332d666966612d776f726c642d6375702d323032322e6a7067"
-            alt="Logo"
-            width="30"
-            height="24"
-            class="d-inline-block align-text-top"
-          />
-          WorldCup Dashboard
-        </a>
-      </div>
-      <a class="navbar-brand" [routerLink]="['/teams']">Teams</a>
-      <a class="navbar-brand" [routerLink]="['/match']">Matches</a>
-      <a class="navbar-brand" [routerLink]="['/standing']">Standings</a>
-    </div>
-    <div style="display: flex; align-items: center; justify-content: center">
-      <a class="navbar-brand" (click)="onLogout()">Sair</a>
-    </div>
-  </div>
-</nav>
+<mat-toolbar color="primary" *ngIf="isLoggedIn$ | async">
+  <mat-toolbar-row>
+    <span>WorldCup DashBoard</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [routerLink]="['/dashboard']">Dashboard</button>
+      <button mat-menu-item [routerLink]="['/teams']">Teams</button>
+      <button mat-menu-item [routerLink]="['/match']">Matches</button>
+      <button mat-menu-item [routerLink]="['/standing']">Standings</button>
+      <button mat-menu-item (click)="onLogout()">Logout</button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>

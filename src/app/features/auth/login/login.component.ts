@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { SnackBarService } from "src/app/shared/services/snack-bar/snack-bar.service";
 import { AuthService } from "../auth.service";
 
 @Component({
@@ -11,11 +12,13 @@ import { AuthService } from "../auth.service";
 export class LoginComponent implements OnInit {
   form: FormGroup;
   isLoading = false;
+  hide = true;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly snackBarService: SnackBarService
   ) {
     this.form = this.fb.group({
       email: ["", Validators.email],
@@ -28,14 +31,16 @@ export class LoginComponent implements OnInit {
   login() {
     this.isLoading = true;
     this.authService.login(this.form.value).subscribe(
-      (resp) => {
-        localStorage.setItem("TOKEN", resp.data.token);
-        alert("Login successful");
+      (_) => {
+        this.snackBarService.openSnackBar("Login successful", "X");
         this.router.navigateByUrl("/dashboard");
       },
       (_) => {
         this.isLoading = false;
-        alert("Something went wrong try later");
+        this.snackBarService.openSnackBar(
+          "Something went wrong try later",
+          "X"
+        );
       }
     );
   }

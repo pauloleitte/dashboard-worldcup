@@ -14,7 +14,7 @@ import { SignupResponseModel } from "./models/signup-response.model";
 })
 export class AuthService {
   urlApi = environment.API_URL;
-  private loggedIn = new BehaviorSubject<boolean>(this.tokenAvailable()); // {1}
+  private loggedIn = new BehaviorSubject<boolean>(this.tokenAvailable());
 
   constructor(
     private readonly http: HttpClient,
@@ -26,7 +26,9 @@ export class AuthService {
       .post<LoginResponseModel>(`${this.urlApi}/user/login`, request)
       .pipe(
         tap((result) => {
-          if (result.status === "200") {
+          console.log(result);
+          if (result.status == "success") {
+            localStorage.setItem("TOKEN", result.data.token);
             this.loggedIn.next(true);
             return result.data;
           }
@@ -36,11 +38,22 @@ export class AuthService {
   }
 
   signup(request: SignupRequestModel): Observable<SignupResponseModel> {
-    return this.http.post<SignupResponseModel>(`${this.urlApi}/user`, request);
+    let req = this.http
+      .post<SignupResponseModel>(`${this.urlApi}/user`, request)
+      .pipe(
+        tap((result) => {
+          if (result.status === "200") {
+            localStorage.setItem("TOKEN", result.data.token);
+            this.loggedIn.next(true);
+            return result.data;
+          }
+        })
+      );
+    return req;
   }
 
   get isLoggedIn() {
-    return this.loggedIn.asObservable(); // {2}
+    return this.loggedIn.asObservable();
   }
 
   logout() {

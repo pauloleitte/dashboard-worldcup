@@ -11,6 +11,7 @@ import { AuthService } from "../auth.service";
 export class RegisterComponent implements OnInit {
   form: FormGroup;
   isLoading = false;
+  hide = true;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -21,7 +22,6 @@ export class RegisterComponent implements OnInit {
       name: ["", Validators.required],
       email: ["", Validators.email],
       password: ["", Validators.required, Validators.min(8)],
-      confirmPassword: ["", Validators.required, Validators.min(8)],
     });
   }
 
