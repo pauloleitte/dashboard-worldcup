@@ -10,6 +10,7 @@ import { AuthService } from "../auth.service";
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
+  isLoading = false;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -25,11 +26,18 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   login() {
-    this.authService.login(this.form.value).subscribe((resp) => {
-      localStorage.setItem("TOKEN", resp.data.token);
-      alert("Login realizado com sucesso");
-      this.router.navigateByUrl("/home");
-    }, console.error);
+    this.isLoading = true;
+    this.authService.login(this.form.value).subscribe(
+      (resp) => {
+        localStorage.setItem("TOKEN", resp.data.token);
+        alert("Login successful");
+        this.router.navigateByUrl("/dashboard");
+      },
+      (_) => {
+        this.isLoading = false;
+        alert("Something went wrong try later");
+      }
+    );
   }
 
   get f() {

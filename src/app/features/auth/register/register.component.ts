@@ -10,6 +10,7 @@ import { AuthService } from "../auth.service";
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
+  isLoading = false;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -27,11 +28,18 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {}
 
   register() {
-    this.authService.signup(this.form.value).subscribe((resp) => {
-      localStorage.setItem("TOKEN", resp.data.token);
-      alert("Cadastro realizado com sucesso");
-      this.router.navigateByUrl("/home");
-    }, console.error);
+    this.isLoading = true;
+    this.authService.signup(this.form.value).subscribe(
+      (resp) => {
+        localStorage.setItem("TOKEN", resp.data.token);
+        alert("Registration done successfully");
+        this.router.navigateByUrl("/dashboard");
+      },
+      (_) => {
+        this.isLoading = false;
+        alert("Something went wrong try later");
+      }
+    );
   }
 
   get f() {
